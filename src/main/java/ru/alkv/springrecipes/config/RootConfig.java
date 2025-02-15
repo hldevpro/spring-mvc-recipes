@@ -21,6 +21,6 @@ public class RootConfig {
     // See http://localhost:8080/#forms and form.jsp for examples
     @Bean
     public RequestDataValueProcessor requestDataValueProcessor() {
-        return new CsrfRequestDataValueProcessor();
+         return new CsrfRequestDataValueProcessor();
     }
 }

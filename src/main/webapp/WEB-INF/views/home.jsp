@@ -22,12 +22,21 @@
 <div id="tabs">
 	<ul>
 		<li><a href="#simple">Simple</a></li>
+		<li><a href="#pojo">Pojo</a></li>
     </ul>
     <div id="simple">
 		<h2>Simple</h2>
 		<ul>
 			<li>
 				<a id="simpleLink" class="textLink" href="<c:url value="/simple" />">GET /simple</a>
+			</li>
+		</ul>
+	</div>
+	<div id="pojo">
+		<h2>Pojo</h2>
+		<ul>
+			<li>
+				<a id="pojoLink" class="textLink" href="<c:url value="/pojo" />">GET /pojo</a>
 			</li>
 		</ul>
 	</div>
