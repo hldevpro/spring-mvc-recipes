@@ -7,8 +7,8 @@ public class Battery extends Product {
         super();
     }
 
-    public Battery(String name, double price) {
-        super(name, price);
+    public Battery(String name, double price, double discount) {
+        super(name, price, discount);
     }
 
     public boolean getRechargeable() {

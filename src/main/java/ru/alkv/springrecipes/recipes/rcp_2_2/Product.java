@@ -1,16 +1,20 @@
 package ru.alkv.springrecipes.recipes.rcp_2_2;
 
+import java.text.DecimalFormat;
+
 public class Product {
 
     private String name;
     private double price;
+    private double discount;
 
     public Product() {
     }
 
-    public Product(String name, double price) {
+    public Product(String name, double price, double discount) {
         this.name = name;
         this.price = price;
+        this.discount = discount;
     }
 
     public String getName() {
@@ -29,7 +33,17 @@ public class Product {
         this.price = price;
     }
 
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
     public String toString() {
-        return name + " " + price;
+        DecimalFormat df = new DecimalFormat("#%");
+
+        return name + " " + price + " (" + df.format(discount) + " discount!)";
     }	
 }

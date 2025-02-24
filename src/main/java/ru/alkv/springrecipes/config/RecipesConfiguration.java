@@ -1,10 +1,10 @@
 package ru.alkv.springrecipes.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.*;
 
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.Resource;
 import ru.alkv.springrecipes.recipes.rcp_2_1.SequenceGenerator;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Battery;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Disc;
@@ -12,6 +12,7 @@ import ru.alkv.springrecipes.recipes.rcp_2_2.Product;
 import ru.alkv.springrecipes.recipes.rcp_2_3_1.DatePrefixGenerator;
 import ru.alkv.springrecipes.recipes.rcp_2_3_1.NumberPrefixGenerator;
 import ru.alkv.springrecipes.recipes.rcp_2_3_1.SequenceGenerator2;
+import ru.alkv.springrecipes.recipes.rcp_2_6.BannerLoader;
 
 @Configuration
 @ComponentScan(
@@ -26,6 +27,7 @@ import ru.alkv.springrecipes.recipes.rcp_2_3_1.SequenceGenerator2;
 		)
 	}
 )
+@PropertySource("classpath:shoppingcart.properties")
 public class RecipesConfiguration {
 
 	@Bean
@@ -40,15 +42,19 @@ public class RecipesConfiguration {
 
 	@Bean
 	public Product aaa() {
-		Battery p1 = new Battery("AAA", 2.5);
+		//Battery p1 = new Battery("AAA", 2.5);
+		Battery p1 = new Battery();
+		p1.setName("AAA");
+		p1.setPrice(2.5);
 		p1.setRechargeable(true);
+		p1.setDiscount(specialCustomerDiscountField);
 
 		return p1;
 	}
 
 	@Bean
 	public Product cdrw() {
-		Disc p2 = new Disc("CD-RW", 1.5);
+		Disc p2 = new Disc("CD-RW", 1.5, summerDiscountField);
 		p2.setCapacity(700);
 
 		return p2;
@@ -56,7 +62,7 @@ public class RecipesConfiguration {
 
 	@Bean
 	public Product dvdrw() {
-		Disc p2 = new Disc("DVD-RW", 3.0);
+		Disc p2 = new Disc("DVD-RW", 3.0, endofyearDiscountField);
 		p2.setCapacity(700);
 		return p2;
 	}
@@ -82,5 +88,30 @@ public class RecipesConfiguration {
 		sequence.setSuffix("A");
 
 		return sequence;
+	}
+
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+		return new PropertySourcesPlaceholderConfigurer();
+	}
+
+	@Value("${specialcustomer.discount:0}")
+	private double specialCustomerDiscountField;
+
+	@Value("${summer.discount:0}")
+	private double summerDiscountField;
+
+	@Value("${endofyear.discount:0}")
+	private double endofyearDiscountField;
+
+	@Value("classpath:banner.txt")
+	private Resource banner;
+
+	@Bean
+	public BannerLoader bannerLoader() {
+		BannerLoader b1 = new BannerLoader();
+		b1.setBanner(banner);
+
+		return b1;
 	}
 }
