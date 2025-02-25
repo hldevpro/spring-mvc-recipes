@@ -16,6 +16,7 @@ import ru.alkv.springrecipes.recipes.rcp_2_2.Product;
 import ru.alkv.springrecipes.recipes.rcp_2_3_1.SequenceGenerator2;
 import ru.alkv.springrecipes.recipes.rcp_2_5_1.ShoppingCart;
 import ru.alkv.springrecipes.recipes.rcp_2_8_1.Cashier;
+import ru.alkv.springrecipes.recipes.rcp_2_8_2.Cashier2;
 
 import java.io.IOException;
 import java.util.Date;
@@ -62,6 +63,9 @@ public class PojoController {
 
 		Cashier cashier = context.getBean("cashier", Cashier.class);
 		cashier.checkout(cart1);
+
+		Cashier2 cashier2 = context.getBean("cashier2", Cashier2.class);
+		cashier2.checkout(cart2);
 
         return "<p>Squence: " +
 				seqGen.getSequence() + "</p>" +

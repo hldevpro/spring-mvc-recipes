@@ -24,7 +24,8 @@ import ru.alkv.springrecipes.recipes.rcp_2_8_1.Cashier;
 			pattern = { 
 				"ru.alkv.springrecipes.recipes.rcp_2_1_1.*Dao",
 				"ru.alkv.springrecipes.recipes.rcp_2_1_1.*Service",
-				"ru.alkv.springrecipes.recipes.rcp_2_2.*"
+				"ru.alkv.springrecipes.recipes.rcp_2_2.*",
+				"ru.alkv.springrecipes.recipes.rcp_2_8.*"
 			}
 		)
 	}
