@@ -17,6 +17,8 @@ import ru.alkv.springrecipes.recipes.rcp_2_3_1.SequenceGenerator2;
 import ru.alkv.springrecipes.recipes.rcp_2_5_1.ShoppingCart;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Properties;
 
 @RestController
@@ -51,17 +53,25 @@ public class PojoController {
 		Resource resource = new ClassPathResource("shoppingcart.properties");
 		Properties props = PropertiesLoaderUtils.loadProperties(resource);
 
-        return "Squence: " + 
-				seqGen.getSequence() + "</hr>" +
-				" SequenceGenerator2: " + 
-				generator.getSequence() + "</hr>" +
-				" SequenceDao: " + 
-				sequenceDao.getNextValue("IT") + "</hr>" +
-				" Product battery: " + aaa + "</hr>" +
-				" Product disc: " + cdrw + "</hr>" +
-				"Shopping cart 1 contains: " + cart1.getItems() + "</hr>" +
-				"Shopping cart 2 contains: " + cart2.getItems() + "</hr>" +
+		String alert = context.getMessage("alert.checkout", null, Locale.US);
+		String alert_inventory = context.getMessage(
+				"alert.inventory.checkout",
+				new Object[]{"[DVD-RW 3.0]", new Date()},
+				Locale.US);
+
+        return "<p>Squence: " +
+				seqGen.getSequence() + "</p>" +
+				"<p>SequenceGenerator2: " +
+				generator.getSequence() + "</p>" +
+				"<p>SequenceDao: " +
+				sequenceDao.getNextValue("IT") + "</p>" +
+				"<p>Product battery: " + aaa + "</p>" +
+				"<p>Product disc: " + cdrw + "</p>" +
+				"<p>Shopping cart 1 contains: " + cart1.getItems() + "</p>" +
+				"<p>Shopping cart 2 contains: " + cart2.getItems() + "</p>" +
 				"<p>And don't forget our discounts!" + "</hr>" +
-				props + "</p>";
+				props + "</p>" +
+				"<p>The I18N message for alert.checkout is: " + alert + "</p>" +
+				"<p>The I18N message for alert.inventory.checkout is: " + alert_inventory + "</p>";
     }
 }

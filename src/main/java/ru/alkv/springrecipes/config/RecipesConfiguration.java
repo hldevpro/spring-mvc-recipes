@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.Resource;
 import ru.alkv.springrecipes.recipes.rcp_2_1.SequenceGenerator;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Battery;
@@ -113,5 +114,15 @@ public class RecipesConfiguration {
 		b1.setBanner(banner);
 
 		return b1;
+	}
+
+	@Bean
+	public ReloadableResourceBundleMessageSource messageSource() {
+		ReloadableResourceBundleMessageSource src = new ReloadableResourceBundleMessageSource();
+
+		src.setBasenames("classpath:messages");
+		src.setCacheSeconds(1);
+
+		return src;
 	}
 }
