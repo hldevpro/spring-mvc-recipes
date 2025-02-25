@@ -14,6 +14,7 @@ import ru.alkv.springrecipes.recipes.rcp_2_3_1.DatePrefixGenerator;
 import ru.alkv.springrecipes.recipes.rcp_2_3_1.NumberPrefixGenerator;
 import ru.alkv.springrecipes.recipes.rcp_2_3_1.SequenceGenerator2;
 import ru.alkv.springrecipes.recipes.rcp_2_6.BannerLoader;
+import ru.alkv.springrecipes.recipes.rcp_2_8_1.Cashier;
 
 @Configuration
 @ComponentScan(
@@ -124,5 +125,16 @@ public class RecipesConfiguration {
 		src.setCacheSeconds(1);
 
 		return src;
+	}
+
+	@Bean(initMethod = "openFile", destroyMethod = "closeFile")
+	public Cashier cashier() {
+		String path = System.getProperty("java.io.tmpdir") + "/cahier";
+
+		Cashier cashier = new Cashier();
+		cashier.setFileName("checkout");
+		cashier.setPath(path);
+
+		return cashier;
 	}
 }
