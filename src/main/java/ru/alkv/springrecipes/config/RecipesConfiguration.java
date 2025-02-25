@@ -7,6 +7,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.Resource;
 import ru.alkv.springrecipes.recipes.rcp_2_1.SequenceGenerator;
+import ru.alkv.springrecipes.recipes.rcp_2_10_1.ProductCreator;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Battery;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Disc;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Product;
@@ -15,6 +16,7 @@ import ru.alkv.springrecipes.recipes.rcp_2_3_1.NumberPrefixGenerator;
 import ru.alkv.springrecipes.recipes.rcp_2_3_1.SequenceGenerator2;
 import ru.alkv.springrecipes.recipes.rcp_2_6.BannerLoader;
 import ru.alkv.springrecipes.recipes.rcp_2_8_1.Cashier;
+import ru.alkv.springrecipes.recipes.rcp_2_9_2.ProductCheckBeanPostProcessor;
 
 @Configuration
 @ComponentScan(
@@ -25,13 +27,19 @@ import ru.alkv.springrecipes.recipes.rcp_2_8_1.Cashier;
 				"ru.alkv.springrecipes.recipes.rcp_2_1_1.*Dao",
 				"ru.alkv.springrecipes.recipes.rcp_2_1_1.*Service",
 				"ru.alkv.springrecipes.recipes.rcp_2_2.*",
-				"ru.alkv.springrecipes.recipes.rcp_2_8.*"
+				"ru.alkv.springrecipes.recipes.rcp_2_8.*",
+				"ru.alkv.springrecipes.recipes.rcp_2_9.*"
 			}
 		)
 	}
 )
 @PropertySource("classpath:shoppingcart.properties")
 public class RecipesConfiguration {
+
+	@Bean
+	public static ProductCheckBeanPostProcessor productCheckBeanPostProcessor() {
+		return new ProductCheckBeanPostProcessor();
+	}
 
 	@Bean
 	public SequenceGenerator sequenceGenerator() {
@@ -137,5 +145,20 @@ public class RecipesConfiguration {
 		cashier.setPath(path);
 
 		return cashier;
+	}
+
+	@Bean
+	public Product aaa_nd() {
+		return ProductCreator.createProduct("aaa_nd");
+	}
+
+	@Bean
+	public Product cdrw_nd() {
+		return ProductCreator.createProduct("cdrw_nd");
+	}
+
+	@Bean
+	public Product dvdrw_nd() {
+		return ProductCreator.createProduct("dvdrw_nd");
 	}
 }

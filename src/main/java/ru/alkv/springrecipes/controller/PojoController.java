@@ -67,6 +67,15 @@ public class PojoController {
 		Cashier2 cashier2 = context.getBean("cashier2", Cashier2.class);
 		cashier2.checkout(cart2);
 
+		Product aaa_nd = context.getBean("aaa_nd", Product.class);
+		Product cdrw_nd = context.getBean("cdrw_nd", Product.class);
+		Product dvdrw_nd = context.getBean("dvdrw_nd", Product.class);
+
+		ShoppingCart cart_nd = context.getBean("shoppingCart", ShoppingCart.class);
+		cart_nd.addItem(aaa_nd);
+		cart_nd.addItem(cdrw_nd);
+		cart_nd.addItem(dvdrw_nd);
+
         return "<p>Squence: " +
 				seqGen.getSequence() + "</p>" +
 				"<p>SequenceGenerator2: " +
@@ -80,6 +89,7 @@ public class PojoController {
 				"<p>And don't forget our discounts!" + "</hr>" +
 				props + "</p>" +
 				"<p>The I18N message for alert.checkout is: " + alert + "</p>" +
-				"<p>The I18N message for alert.inventory.checkout is: " + alert_inventory + "</p>";
+				"<p>The I18N message for alert.inventory.checkout is: " + alert_inventory + "</p>" +
+				"<p>Shopping cart non discount contains: " + cart_nd.getItems() + "</p>";
     }
 }
