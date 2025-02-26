@@ -8,6 +8,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.core.io.Resource;
 import ru.alkv.springrecipes.recipes.rcp_2_1.SequenceGenerator;
 import ru.alkv.springrecipes.recipes.rcp_2_10_1.ProductCreator;
+import ru.alkv.springrecipes.recipes.rcp_2_10_2.ProductCreatorFactory;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Battery;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Disc;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Product;
@@ -17,6 +18,9 @@ import ru.alkv.springrecipes.recipes.rcp_2_3_1.SequenceGenerator2;
 import ru.alkv.springrecipes.recipes.rcp_2_6.BannerLoader;
 import ru.alkv.springrecipes.recipes.rcp_2_8_1.Cashier;
 import ru.alkv.springrecipes.recipes.rcp_2_9_2.ProductCheckBeanPostProcessor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @ComponentScan(
@@ -160,5 +164,30 @@ public class RecipesConfiguration {
 	@Bean
 	public Product dvdrw_nd() {
 		return ProductCreator.createProduct("dvdrw_nd");
+	}
+
+	@Bean
+	public ProductCreatorFactory productCreatorFactory() {
+		ProductCreatorFactory factory = new ProductCreatorFactory();
+
+		Map<String, Product> products = new HashMap<>();
+
+		products.put("aa", new Battery("AA", 3.0, 0));
+		products.put("blueray", new Disc("BD-RW", 5.0, 0));
+
+		factory.setProducts(products);
+
+		return factory;
+	}
+
+
+	@Bean
+	public Product aa() {
+		return productCreatorFactory().createProduct("aa");
+	}
+
+	@Bean
+	public Product bdrw() {
+		return productCreatorFactory().createProduct("blueray");
 	}
 }
