@@ -10,6 +10,7 @@ import ru.alkv.springrecipes.recipes.rcp_2_1.SequenceGenerator;
 import ru.alkv.springrecipes.recipes.rcp_2_10_1.ProductCreator;
 import ru.alkv.springrecipes.recipes.rcp_2_10_2.ProductCreatorFactory;
 import ru.alkv.springrecipes.recipes.rcp_2_10_3.DiscountFactoryBean;
+import ru.alkv.springrecipes.recipes.rcp_2_11.ProductDumper;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Battery;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Disc;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Product;
@@ -223,5 +224,17 @@ public class RecipesConfiguration {
 		factory.setProduct(dvd());
 		factory.setDiscount(0.3);
 		return factory;
+	}
+
+	@Bean(initMethod = "openFile", destroyMethod = "closeFile")
+	@Profile("local")
+	public ProductDumper dumper() {
+		final String path = System.getProperty("java.io.tmpdir") + "dumper";
+
+		ProductDumper dumper = new ProductDumper();
+		dumper.setFileName("dump");
+		dumper.setPath(path);
+
+		return dumper;
 	}
 }

@@ -2,6 +2,7 @@ package ru.alkv.springrecipes.controller;
 
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import ru.alkv.springrecipes.recipes.rcp_2_1.SequenceGenerator;
+import ru.alkv.springrecipes.recipes.rcp_2_11.ProductDumper;
 import ru.alkv.springrecipes.recipes.rcp_2_1_1.SequenceDao;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Product;
 import ru.alkv.springrecipes.recipes.rcp_2_3_1.SequenceGenerator2;
@@ -19,6 +21,7 @@ import ru.alkv.springrecipes.recipes.rcp_2_8_1.Cashier;
 import ru.alkv.springrecipes.recipes.rcp_2_8_2.Cashier2;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
@@ -29,6 +32,9 @@ public class PojoController {
 
 	@Autowired
 	ApplicationContext context;
+
+	@Autowired
+	private Environment environment;
 	
 	@GetMapping("/pojo")
     public String simple() throws IOException {
@@ -90,6 +96,14 @@ public class PojoController {
 		cartDiscs.addItem(cd);
 		cartDiscs.addItem(dvd);
 
+		Product supbat = context.getBean("super_battery", Product.class);
+
+		if(Arrays.stream(environment.getActiveProfiles()).anyMatch( env ->  env.equalsIgnoreCase("local" ))) {
+			ProductDumper dumper = context.getBean("dumper", ProductDumper.class);
+
+			dumper.writeProduct(supbat);
+		}
+
         return "<p>Squence: " +
 				seqGen.getSequence() + "</p>" +
 				"<p>SequenceGenerator2: " +
@@ -106,6 +120,7 @@ public class PojoController {
 				"<p>The I18N message for alert.inventory.checkout is: " + alert_inventory + "</p>" +
 				"<p>Shopping cart non discount contains: " + cart_nd.getItems() + "</p>" +
 				"<p>Shopping cart from factory contains: " + cartNew.getItems() + "</p>" +
-				"<p>Shopping cart from discount factory contains: " + cartDiscs.getItems() + "</p>";
+				"<p>Shopping cart from discount factory contains: " + cartDiscs.getItems() + "</p>" +
+				"<p>Got super battery: " + supbat.toString() + "</p>";
     }
 }
