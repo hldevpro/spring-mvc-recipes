@@ -40,7 +40,7 @@ public class MvcShowcaseAppInitializer extends AbstractAnnotationConfigDispatche
         super.onStartup(servletContext);
 
         // Set active profile
-        servletContext.setInitParameter("spring.profiles.active", "prod");
+        //servletContext.setInitParameter("spring.profiles.active", "prod");
         //servletContext.setInitParameter("spring.profiles.active", "dev, local");
     }
 
@@ -49,6 +49,8 @@ public class MvcShowcaseAppInitializer extends AbstractAnnotationConfigDispatche
     protected WebApplicationContext createRootApplicationContext() {
 
         WebApplicationContext context = (WebApplicationContext) super.createRootApplicationContext();
+
+        ((ConfigurableEnvironment)context.getEnvironment()).setDefaultProfiles("dev");
 
         //Set multiple active profiles
         //((ConfigurableEnvironment)context.getEnvironment()).setActiveProfiles(new String[]{"dev", "local"});
