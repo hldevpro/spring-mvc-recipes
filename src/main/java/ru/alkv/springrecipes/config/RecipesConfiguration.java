@@ -11,6 +11,7 @@ import ru.alkv.springrecipes.recipes.rcp_2_10_1.ProductCreator;
 import ru.alkv.springrecipes.recipes.rcp_2_10_2.ProductCreatorFactory;
 import ru.alkv.springrecipes.recipes.rcp_2_10_3.DiscountFactoryBean;
 import ru.alkv.springrecipes.recipes.rcp_2_11.ProductDumper;
+import ru.alkv.springrecipes.recipes.rcp_2_12.CashierWithName;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Battery;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Disc;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Product;
@@ -236,5 +237,16 @@ public class RecipesConfiguration {
 		dumper.setPath(path);
 
 		return dumper;
+	}
+
+	@Bean(initMethod = "openFile", destroyMethod = "closeFile")
+	public CashierWithName cashierWithName() {
+		final String path = System.getProperty("java.io.tmpdir") + "cashierWithName";
+
+		CashierWithName c1 = new CashierWithName();
+
+		c1.setPath(path);
+
+		return c1;
 	}
 }

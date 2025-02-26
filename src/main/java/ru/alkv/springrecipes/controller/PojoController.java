@@ -13,6 +13,7 @@ import org.springframework.context.ApplicationContext;
 
 import ru.alkv.springrecipes.recipes.rcp_2_1.SequenceGenerator;
 import ru.alkv.springrecipes.recipes.rcp_2_11.ProductDumper;
+import ru.alkv.springrecipes.recipes.rcp_2_12.CashierWithName;
 import ru.alkv.springrecipes.recipes.rcp_2_1_1.SequenceDao;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Product;
 import ru.alkv.springrecipes.recipes.rcp_2_3_1.SequenceGenerator2;
@@ -103,6 +104,9 @@ public class PojoController {
 
 			dumper.writeProduct(supbat);
 		}
+
+		CashierWithName cashierWithName = context.getBean("cashierWithName", CashierWithName.class);
+		cashierWithName.checkout(cartDiscs);
 
         return "<p>Squence: " +
 				seqGen.getSequence() + "</p>" +
