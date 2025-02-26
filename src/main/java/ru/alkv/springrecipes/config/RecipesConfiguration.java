@@ -9,6 +9,7 @@ import org.springframework.core.io.Resource;
 import ru.alkv.springrecipes.recipes.rcp_2_1.SequenceGenerator;
 import ru.alkv.springrecipes.recipes.rcp_2_10_1.ProductCreator;
 import ru.alkv.springrecipes.recipes.rcp_2_10_2.ProductCreatorFactory;
+import ru.alkv.springrecipes.recipes.rcp_2_10_3.DiscountFactoryBean;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Battery;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Disc;
 import ru.alkv.springrecipes.recipes.rcp_2_2.Product;
@@ -189,5 +190,38 @@ public class RecipesConfiguration {
 	@Bean
 	public Product bdrw() {
 		return productCreatorFactory().createProduct("blueray");
+	}
+
+	@Bean
+	public Product cd() {
+		Disc cd = new Disc("CD", 1.5, 0);
+		cd.setCapacity(700);
+
+		return cd;
+	}
+
+	@Bean
+	public Product dvd() {
+		Disc dvd = new Disc("DVD", 2, 0);
+		dvd.setCapacity(1400);
+
+		return dvd;
+	}
+
+	@Bean
+	public DiscountFactoryBean discountFactoryBeanCD() {
+		DiscountFactoryBean factory = new DiscountFactoryBean();
+		factory.setProduct(cd());
+		factory.setDiscount(0.2);
+
+		return factory;
+	}
+
+	@Bean
+	public DiscountFactoryBean discountFactoryBeanDVD() {
+		DiscountFactoryBean factory = new DiscountFactoryBean();
+		factory.setProduct(dvd());
+		factory.setDiscount(0.3);
+		return factory;
 	}
 }

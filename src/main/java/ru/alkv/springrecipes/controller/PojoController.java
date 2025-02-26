@@ -83,6 +83,12 @@ public class PojoController {
 		cartNew.addItem(aa);
 		cartNew.addItem(bdrw);
 
+		Product cd = context.getBean("cd", Product.class);
+		Product dvd = context.getBean("dvd", Product.class);
+
+		ShoppingCart cartDiscs = context.getBean("shoppingCart", ShoppingCart.class);
+		cartDiscs.addItem(cd);
+		cartDiscs.addItem(dvd);
 
         return "<p>Squence: " +
 				seqGen.getSequence() + "</p>" +
@@ -99,6 +105,7 @@ public class PojoController {
 				"<p>The I18N message for alert.checkout is: " + alert + "</p>" +
 				"<p>The I18N message for alert.inventory.checkout is: " + alert_inventory + "</p>" +
 				"<p>Shopping cart non discount contains: " + cart_nd.getItems() + "</p>" +
-				"<p>Shopping cart from fabric contains: " + cartNew.getItems() + "</p>";
+				"<p>Shopping cart from factory contains: " + cartNew.getItems() + "</p>" +
+				"<p>Shopping cart from discount factory contains: " + cartDiscs.getItems() + "</p>";
     }
 }
