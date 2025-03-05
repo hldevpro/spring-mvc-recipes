@@ -16,7 +16,8 @@ public class MvcShowcaseAppInitializer extends AbstractAnnotationConfigDispatche
                 RootConfig.class,
                 RecipesConfiguration.class,
                 DevConfiguration.class,
-                ProdConfiguration.class
+                ProdConfiguration.class,
+                AopConfiguration.class
         };
     }
 

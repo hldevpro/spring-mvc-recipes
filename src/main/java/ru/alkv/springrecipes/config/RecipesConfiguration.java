@@ -35,7 +35,8 @@ import java.util.Map;
 				"ru.alkv.springrecipes.recipes.rcp_2_1_1.*Service",
 				"ru.alkv.springrecipes.recipes.rcp_2_2.*",
 				"ru.alkv.springrecipes.recipes.rcp_2_8.*",
-				"ru.alkv.springrecipes.recipes.rcp_2_9.*"
+				"ru.alkv.springrecipes.recipes.rcp_2_9.*",
+				"ru.alkv.springrecipes.recipes.rcp_2_13.*"
 			}
 		)
 	}
