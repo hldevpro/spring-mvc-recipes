@@ -30,6 +30,13 @@ public class ApectsController {
         arithmeticCalculator.mul(2, 3);
         arithmeticCalculator.div(4, 2);
 
+        try {
+            arithmeticCalculator.div(4, 0);
+        }
+        catch(Throwable e) {
+            log.info("In the Aspects controller caught exception: " + e.getMessage());
+        }
+
         UnitCalculator unitCalculator = context.getBean("unitCalculator", UnitCalculator.class);
         unitCalculator.kilogramToPound(10);
         unitCalculator.kilometerToMile(5);
