@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.alkv.springrecipes.recipes.rcp_2_13_1.ArithmeticCalculator;
 import ru.alkv.springrecipes.recipes.rcp_2_13_1.UnitCalculator;
 import ru.alkv.springrecipes.recipes.rcp_2_16_1.NewArithmeticCalculator;
+import ru.alkv.springrecipes.recipes.rcp_2_17_1.OtherArithmeticCalculator;
+import ru.alkv.springrecipes.recipes.rcp_2_17_1.OtherUnitCalculator;
+import ru.alkv.springrecipes.recipes.rcp_2_18.MaxCalculator;
+import ru.alkv.springrecipes.recipes.rcp_2_18.MinCalculator;
 
 import java.io.IOException;
 
@@ -60,13 +64,24 @@ public class ApectsController {
         log.info("Trying otherArithmeticCalculator:");
         System.out.println("");
 
-        ArithmeticCalculator otherArithmeticCalculator =
-                (ArithmeticCalculator) context.getBean("otherArithmeticCalculator");
+        OtherArithmeticCalculator otherArithmeticCalculator =
+                (OtherArithmeticCalculator) context.getBean("otherArithmeticCalculator");
 
         otherArithmeticCalculator.add(1, 2);
         otherArithmeticCalculator.sub(4, 3);
         otherArithmeticCalculator.mul(2, 3);
         otherArithmeticCalculator.div(4, 2);
+        otherArithmeticCalculator.pow(3, 2);
+
+        OtherUnitCalculator otherUnitCalculator = context.getBean("otherUnitCalculator", OtherUnitCalculator.class);
+        otherUnitCalculator.kilogramToPound(10);
+        otherUnitCalculator.kilometerToMile(5);
+
+        MaxCalculator maxCalculator = (MaxCalculator) otherArithmeticCalculator;
+        maxCalculator.max(1, 2);
+
+        MinCalculator minCalculator = (MinCalculator) otherArithmeticCalculator;
+        minCalculator.min(1, 2);
 
         return "Aspects are ready!";
     }

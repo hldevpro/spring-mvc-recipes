@@ -103,17 +103,4 @@ public class CalculatorLoggingAspect2 {
 			throw e;
 		}
 	}
-
-
-	@AfterReturning(
-		pointcut = "ru.alkv.springrecipes.recipes.rcp_2_17_1.CalculatorPointcuts.annotationLoggingOperation()",
-		returning = "result"
-	)
-	public void logByAnnotationAfterReturning(JoinPoint joinPoint, Object result) {
-		logger.info("Using annotation logging: The method " + joinPoint.getSignature().getName() + "() returns with " + result);
-
-		System.out.printf("Using annotation logging: The method %s() returns with %s\n", 
-						joinPoint.getSignature().getName(),
-						result);
-	}
 }
