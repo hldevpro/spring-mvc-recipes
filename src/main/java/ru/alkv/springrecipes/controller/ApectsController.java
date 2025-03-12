@@ -13,6 +13,7 @@ import ru.alkv.springrecipes.recipes.rcp_2_17_1.OtherArithmeticCalculator;
 import ru.alkv.springrecipes.recipes.rcp_2_17_1.OtherUnitCalculator;
 import ru.alkv.springrecipes.recipes.rcp_2_18.MaxCalculator;
 import ru.alkv.springrecipes.recipes.rcp_2_18.MinCalculator;
+import ru.alkv.springrecipes.recipes.rcp_2_19.Counter;
 
 import java.io.IOException;
 
@@ -83,6 +84,8 @@ public class ApectsController {
         MinCalculator minCalculator = (MinCalculator) otherArithmeticCalculator;
         minCalculator.min(1, 2);
 
-        return "Aspects are ready!";
+        Counter counter = (Counter) otherArithmeticCalculator;
+
+        return "<p>otherArithmeticCalculator methods calls count: " + counter.getCount();
     }
 }
