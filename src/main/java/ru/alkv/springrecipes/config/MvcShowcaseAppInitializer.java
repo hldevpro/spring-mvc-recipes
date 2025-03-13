@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -17,7 +18,8 @@ public class MvcShowcaseAppInitializer extends AbstractAnnotationConfigDispatche
                 RecipesConfiguration.class,
                 DevConfiguration.class,
                 ProdConfiguration.class,
-                AopConfiguration.class
+                AopConfiguration.class,
+                ExecutorsConfiguration.class
         };
     }
 
@@ -43,6 +45,16 @@ public class MvcShowcaseAppInitializer extends AbstractAnnotationConfigDispatche
         // Set active profile
         //servletContext.setInitParameter("spring.profiles.active", "prod");
         //servletContext.setInitParameter("spring.profiles.active", "dev, local");
+
+        // Получаем корневой контекст из ServletContext
+        WebApplicationContext rootContext = (WebApplicationContext) servletContext.getAttribute(
+                WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE
+        );
+
+        // Регистрируем хук для корневого контекста
+        if (rootContext instanceof AnnotationConfigWebApplicationContext) {
+            ((AnnotationConfigWebApplicationContext) rootContext).registerShutdownHook();
+        }
     }
 
     //If the @Profile beans are loaded via root context
@@ -55,6 +67,7 @@ public class MvcShowcaseAppInitializer extends AbstractAnnotationConfigDispatche
 
         //Set multiple active profiles
         //((ConfigurableEnvironment)context.getEnvironment()).setActiveProfiles(new String[]{"dev", "local"});
+
 
         return context;
 

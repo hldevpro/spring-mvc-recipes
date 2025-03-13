@@ -23,7 +23,8 @@
 	<ul>
 		<li><a href="#simple">Simple</a></li>
 		<li><a href="#pojo">Pojo</a></li>
-		<li><a href="#Aspects">Aspects</a></li>
+		<li><a href="#aspects">Aspects</a></li>
+		<li><a href="#threads">Threads</a></li>
     </ul>
     <div id="simple">
 		<h2>Simple</h2>
@@ -41,14 +42,22 @@
 			</li>
 		</ul>
 	</div>
-		<div id="aspects">
-    		<h2>Aspects</h2>
-    		<ul>
-    			<li>
-    				<a id="aspectsLink" class="textLink" href="<c:url value="/aspects" />">GET /aspects</a>
-    			</li>
-    		</ul>
-    	</div>
+	<div id="aspects">
+    	<h2>Aspects</h2>
+    	<ul>
+    		<li>
+    			<a id="aspectsLink" class="textLink" href="<c:url value="/aspects" />">GET /aspects</a>
+    		</li>
+    	</ul>
+    </div>
+    <div id="threads">
+        <h2>Aspects</h2>
+        <ul>
+        	<li>
+        		<a id="threadsLink" class="textLink" href="<c:url value="/threads" />">GET /threads</a>
+        	</li>
+        </ul>
+   </div>
 
 <script type="text/javascript" src="<c:url value="/resources/jquery/1.6/jquery.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/jqueryform/2.8/jquery.form.js" />"></script>
