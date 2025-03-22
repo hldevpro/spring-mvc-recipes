@@ -25,6 +25,7 @@
 		<li><a href="#pojo">Pojo</a></li>
 		<li><a href="#aspects">Aspects</a></li>
 		<li><a href="#threads">Threads</a></li>
+		<li><a href="#jdbc">Jdbc</a></li>
     </ul>
     <div id="simple">
 		<h2>Simple</h2>
@@ -57,7 +58,15 @@
         		<a id="threadsLink" class="textLink" href="<c:url value="/threads" />">GET /threads</a>
         	</li>
         </ul>
-   </div>
+    </div>
+    <div id="jdbc">
+        <h2>Jdbc</h2>
+        <ul>
+            <li>
+                <a id="jdbcLink" class="textLink" href="<c:url value="/jdbc" />">GET /jdbc</a>
+           	</li>
+        </ul>
+    </div>
 
 <script type="text/javascript" src="<c:url value="/resources/jquery/1.6/jquery.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/jqueryform/2.8/jquery.form.js" />"></script>
