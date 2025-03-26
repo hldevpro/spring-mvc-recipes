@@ -14,7 +14,7 @@
 
     <logger name="ru.alkv.springrecipes.examples.ch6" level="debug" />
 
-    <logger name="org.springframework" level="off" />
+    <logger name="org.springframework.jdbc" level="debug"/>
 
     <root level="debug">
         <appender-ref ref="console"/>

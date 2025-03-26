@@ -8,6 +8,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.NotImplementedException;
+
 public class PlainSingerDao implements SingerDao {
 
     private static Logger log = LoggerFactory.getLogger(PlainSingerDao.class);
@@ -129,7 +131,7 @@ public class PlainSingerDao implements SingerDao {
 
     @Override
     public void update(Singer singer) {
-
+        throw new NotImplementedException("insert");
     }
 
     @Override
@@ -153,6 +155,6 @@ public class PlainSingerDao implements SingerDao {
 
     @Override
     public void insertWithDetail(Singer singer) {
-
+        throw new NotImplementedException("insertWithDetail");
     }
 }

@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.alkv.springrecipes.examples.ch6.plain_jdbc.dao.PlainSingerDao;
 import ru.alkv.springrecipes.examples.ch6.plain_jdbc.entities.Singer;
 
-import java.sql.Date;
+import javax.sql.DataSource;
+import java.sql.*;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -51,6 +52,31 @@ public class JdbcController {
         result += "<p>Deleted singer </p>";
 
         result += printAllSingers(dao);
+
+        DataSource dataSource = context.getBean("dataSource", DataSource.class);
+        try {
+            Connection connection = null;
+            try {
+                connection = dataSource.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT 1 AS id");
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    int mockedVal = resultSet.getInt("id");
+                    result += "<p>On connection test got result: " + mockedVal + "</p>";
+                }
+            }
+            catch (Exception ex) {
+                result += "<p>Exception on getting DataSource: " + ex.getMessage() + "</p>";
+            }
+            finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+        catch (SQLException ex) {
+            result += "<p>Exception on working with DataSource: " + ex.getMessage() + "</p>";
+        }
 
         log.info("Jdbc controller completed request");
 

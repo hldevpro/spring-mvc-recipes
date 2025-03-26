@@ -53,7 +53,7 @@ public class SpringExecutorsDemo {
         System.out.println(Thread.currentThread().getName());
         System.out.printf("SimpleAsyncTaskExecutor got job at %s \n", new Date());
 
-        asyncTaskExecutor.submit(task);
+        //asyncTaskExecutor.submit(task);
 
         System.out.println(Thread.currentThread().getName());
         System.out.printf("SimpleAsyncTaskExecutor finished job at %s \n", new Date());
