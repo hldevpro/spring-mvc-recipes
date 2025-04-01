@@ -6,7 +6,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import ru.alkv.springrecipes.examples.ch6.plain_jdbc.dao.JdbcSingerDao;
+import ru.alkv.springrecipes.examples.ch6.plain_jdbc.dao.SingerDao;
 
 import javax.sql.DataSource;
 import java.sql.Driver;
@@ -30,6 +34,17 @@ public class JdbcDbConfig {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
+    @Bean public JdbcTemplate jdbcTemplate(){
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        jdbcTemplate.setDataSource(dataSource());
+        return jdbcTemplate;
+    }
+
+    @Bean
+    public NamedParameterJdbcTemplate namedParameterJdbcTemplate() {
+        return new NamedParameterJdbcTemplate(dataSource());
+    }
+
     @Lazy
     @Bean
     public DataSource dataSource() {
@@ -47,5 +62,14 @@ public class JdbcDbConfig {
         catch (Exception exception) {
             return null;
         }
+    }
+
+    @Bean
+    public SingerDao singerDao() {
+        JdbcSingerDao dao = new JdbcSingerDao();
+        dao.setJdbcTemplate(jdbcTemplate());
+        dao.setNamedParameterJdbcTemplate(namedParameterJdbcTemplate());
+
+        return dao;
     }
 }

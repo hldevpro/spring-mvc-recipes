@@ -88,6 +88,11 @@ public class PlainSingerDao implements SingerDao {
     }
 
     @Override
+    public String findNameById(Long Id) {
+        return "";
+    }
+
+    @Override
     public String findLastNameById(Long id) {
         return "";
     }

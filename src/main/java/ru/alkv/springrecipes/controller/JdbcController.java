@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ru.alkv.springrecipes.examples.ch6.plain_jdbc.dao.PlainSingerDao;
+import ru.alkv.springrecipes.examples.ch6.plain_jdbc.dao.SingerDao;
 import ru.alkv.springrecipes.examples.ch6.plain_jdbc.entities.Singer;
 
 import javax.sql.DataSource;
@@ -78,6 +79,14 @@ public class JdbcController {
             result += "<p>Exception on working with DataSource: " + ex.getMessage() + "</p>";
         }
 
+        SingerDao jdbcTemplatDao = context.getBean("singerDao", SingerDao.class);
+
+        String singerName = jdbcTemplatDao.findNameById(1L);
+        result += "<p>Found name using named param jdbc template : " + singerName + "</p>";
+
+        result += "<p>List all singers read with RowMapper </p>";
+        result += printAllSingers(jdbcTemplatDao);
+
         log.info("Jdbc controller completed request");
 
         result += "</p>";
@@ -86,7 +95,7 @@ public class JdbcController {
         return result;
     }
 
-    private String printAllSingers(PlainSingerDao dao) {
+    private String printAllSingers(SingerDao dao) {
         String result = "<p>All singers:</p>";
         List<Singer> singers = dao.findAll();
 
