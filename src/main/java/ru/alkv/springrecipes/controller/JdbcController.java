@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ru.alkv.springrecipes.examples.ch6.plain_jdbc.dao.PlainSingerDao;
 import ru.alkv.springrecipes.examples.ch6.plain_jdbc.dao.SingerDao;
+import ru.alkv.springrecipes.examples.ch6.plain_jdbc.entities.Album;
 import ru.alkv.springrecipes.examples.ch6.plain_jdbc.entities.Singer;
 
 import javax.sql.DataSource;
@@ -87,6 +88,9 @@ public class JdbcController {
         result += "<p>List all singers read with RowMapper </p>";
         result += printAllSingers(jdbcTemplatDao);
 
+        result += "<p>List all singers read with ResultSetExtractor </p>";
+        result += printAllSingersWithAlbums(jdbcTemplatDao);
+
         log.info("Jdbc controller completed request");
 
         result += "</p>";
@@ -108,5 +112,34 @@ public class JdbcController {
         }
 
         return result;
+    }
+
+    private String printAllSingersWithAlbums(SingerDao dao) {
+        final StringBuilder resultBuilder = new StringBuilder("<p>All singers with albums:</p>");
+
+        List<Singer> singers = dao.findAllWithDetail();
+        singers.forEach(singer -> {
+            resultBuilder.append("<p>");
+            resultBuilder.append("Name: ");
+            resultBuilder.append(singer.getFirstName());
+            resultBuilder.append(" Second name: ");
+            resultBuilder.append(singer.getLastName());
+            resultBuilder.append(" Birth date: ");
+            resultBuilder.append(singer.getBirthDate());
+            resultBuilder.append("</p>");
+
+            if (singer.getAlbums() != null) {
+                for (Album album: singer.getAlbums()) {
+                    resultBuilder.append("<p>");
+                    resultBuilder.append("*     Album title: ");
+                    resultBuilder.append(album.getTitle());
+                    resultBuilder.append(" Release date: ");
+                    resultBuilder.append(album.getReleaseDate());
+                    resultBuilder.append("</p>");
+                }
+            }
+        });
+
+        return resultBuilder.toString();
     }
 }

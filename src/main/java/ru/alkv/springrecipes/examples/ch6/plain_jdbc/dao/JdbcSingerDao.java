@@ -4,13 +4,17 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import ru.alkv.springrecipes.examples.ch6.plain_jdbc.entities.Album;
 import ru.alkv.springrecipes.examples.ch6.plain_jdbc.entities.Singer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +52,10 @@ public class JdbcSingerDao implements SingerDao, InitializingBean {
 
     @Override
     public List<Singer> findAllWithDetail() {
-        return List.of();
+        String sql = "SELECT s.id, s.first_name, s.last_name, s.birth_date, a.id AS album_id, a.title, a.release_date " +
+                "FROM singer s LEFT JOIN album a ON s.id = a.singer_id";
+
+        return namedParameterJdbcTemplate.query(sql, new SingerWithDetailExtractor());
     }
 
     @Override
@@ -111,6 +118,46 @@ public class JdbcSingerDao implements SingerDao, InitializingBean {
             singer.setBirthDate(rs.getDate("birth_date"));
 
             return singer;
+        }
+    }
+
+    private static final class SingerWithDetailExtractor implements ResultSetExtractor<List<Singer>> {
+
+        @Override
+        public List<Singer> extractData(ResultSet rs) throws SQLException, DataAccessException {
+            Map<Long, Singer> singersRegistry = new HashMap<>();
+            Singer singer = null;
+            while(rs.next()) {
+                Long id = rs.getLong("id");
+                singer = singersRegistry.get(id);
+
+                if (singer == null) {
+                    // New singer found in recordset
+                    singer = new Singer();
+
+                    singer.setId(id);
+                    singer.setFirstName(rs.getString("first_name"));
+                    singer.setLastName(rs.getString("last_name"));
+                    singer.setBirthDate(rs.getDate("birth_date"));
+
+                    singer.setAlbums(new ArrayList<>());
+
+                    singersRegistry.put(id, singer);
+                }
+
+                Long album_id = rs.getLong("album_id");
+                if (album_id > 0) {
+                    Album album = new Album();
+
+                    album.setId(album_id);
+                    album.setTitle(rs.getString("title"));
+                    album.setReleaseDate(rs.getDate("release_date"));
+
+                    singer.addAlbum(album);
+                }
+            }
+
+            return new ArrayList<>(singersRegistry.values());
         }
     }
 }
