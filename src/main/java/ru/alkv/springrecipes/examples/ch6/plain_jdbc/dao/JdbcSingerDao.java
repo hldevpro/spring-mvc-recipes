@@ -102,6 +102,11 @@ public class JdbcSingerDao implements SingerDao, InitializingBean {
     }
 
     @Override
+   public  void deleteByName(String firstName, String lastName) {
+        throw new NotImplementedException("delete");
+    }
+
+    @Override
     public void insertWithDetail(Singer singer) {
         throw new NotImplementedException("insertWithDetail");
     }

@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository("singerDao")
+@Repository("annotatedJdbcSingerDao")
 public class AnnotatedJdbcSingerDao implements SingerDao {
 
     private static Logger logger = LoggerFactory.getLogger(JdbcSingerDao.class);
@@ -171,12 +171,18 @@ public class AnnotatedJdbcSingerDao implements SingerDao {
 
     @Override
     public void delete(Long singerId) {
+        throw new NotImplementedException("delete");
+    }
+
+    @Override
+    public void deleteByName(String firstName, String lastName) {
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("id", singerId);
+        paramMap.put("first_name", firstName);
+        paramMap.put("last_name", lastName);
 
         deleteSinger.updateByNamedParam(paramMap);
 
-        logger.info("Deleting singer with id: " + singerId);
+        logger.info("Deleting singer with first name: " + firstName + " and last name: " + lastName);
     }
 
     @Resource(name = "dataSource")

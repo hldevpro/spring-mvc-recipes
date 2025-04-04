@@ -91,10 +91,70 @@ public class JdbcController {
         result += "<p>List all singers read with ResultSetExtractor </p>";
         result += printAllSingersWithAlbums(jdbcTemplatDao);
 
+        result += "<p>Using AnnotatedJdbcSingerDao</p>";
+        SingerDao jdbcAnnnotatedDao = context.getBean("annotatedJdbcSingerDao", SingerDao.class);
+
+        result += "<p>Show singer John info read with Spring Jdbc Wrappers</p>";
+
+        List<Singer> singersWithJohnOnly = jdbcAnnnotatedDao.findAllByFirstName("John");
+        if (singersWithJohnOnly.size() == 2) {
+            result += "<p>Found following sinsger for name John using annotated Spring Jdbc Wrappers: " +
+                    singersWithJohnOnly.get(0).getFirstName() + " " + singersWithJohnOnly.get(0).getLastName() + "</p>";
+        }
+        else {
+            result += "<p color='red'>Failed to find singer with name John using annotated Spring Jdbc Wrappers</p>";
+        }
+
+        singerName = jdbcAnnnotatedDao.findFirstNameById(2L);
+        result += "<p>Found name using annotated Spring Jdbc Wrappers: " + singerName + "</p>";
+
+        result += "<p>Inserting new singer Al Yankovich without albums with Spring Jdbc Wrappers</p>";
+
+        Singer singer = new Singer();
+        singer.setFirstName("Al");
+        singer.setLastName("Yankovich");
+        singer.setBirthDate(new Date(
+                (new GregorianCalendar(1991, 1, 17)).getTime().getTime()));
+        jdbcAnnnotatedDao.insert(singer);
+
+        result += "<p>List all singers read with Spring Jdbc Wrappers </p>";
+        result += printAllSingers(jdbcAnnnotatedDao);
+
+        result += "<p>Inserting new singer BB King with some albums with Spring Jdbc Wrappers</p>";
+
+        Singer singerKing = new Singer();
+        singerKing.setFirstName("BB");
+        singerKing.setLastName("King");
+        singerKing.setBirthDate(new Date(
+                (new GregorianCalendar(1940, 8, 16)).getTime().getTime()));
+
+        Album album = new Album();
+        album.setTitle("My Kind of Blues");
+        album.setReleaseDate(new Date(
+                (new GregorianCalendar(1961, 7, 18)).getTime().getTime()));
+        singerKing.addAlbum(album);
+
+        album = new Album();
+        album.setTitle("A Heart Full of Blues");
+        album.setReleaseDate(new Date(
+                (new GregorianCalendar(1962, 3, 20)).getTime().getTime()));
+        singerKing.addAlbum(album);
+
+        jdbcAnnnotatedDao.insertWithDetail(singerKing);
+
+        result += "<p>List all singers details read with Spring Jdbc Wrappers</p>";
+        result += printAllSingersWithAlbums(jdbcAnnnotatedDao);
+
+        result += "<p>Deleting two last singers with Spring Jdbc Wrappers</p>";
+
+        jdbcAnnnotatedDao.deleteByName("Al", "Yankovich");
+
+        result += "<p>List all remaining singers after deleting with Spring Jdbc Wrappers </p>";
+        result += printAllSingers(jdbcAnnnotatedDao);
+
         log.info("Jdbc controller completed request");
 
         result += "</p>";
-
 
         return result;
     }

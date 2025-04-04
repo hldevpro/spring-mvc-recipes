@@ -162,4 +162,8 @@ public class PlainSingerDao implements SingerDao {
     public void insertWithDetail(Singer singer) {
         throw new NotImplementedException("insertWithDetail");
     }
+
+    public void deleteByName(String firstName, String lastName) {
+        throw new NotImplementedException("deleteByName");
+    }
 }
